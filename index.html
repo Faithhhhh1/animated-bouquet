@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Bouquet</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ==========================================================
+         BACKGROUND
+    =========================================================== -->
+
+    <div class="background">
+
+        <div class="vignette"></div>
+
+        <div class="ambient-glow"></div>
+
+        <div id="particle-layer" aria-hidden="true"></div>
+
+    </div>
+
+
+    <!-- ==========================================================
+         MAIN SCENE
+    =========================================================== -->
+
+    <main class="scene">
+
+        <!-- Floating title / message -->
+
+        <div class="message-wrapper">
+
+            <div class="message">
+                <span class="message-text">
+                    <!-- Replace with exact reference text -->
+                </span>
+            </div>
+
+        </div>
+
+
+        <!-- Bouquet -->
+
+        <section class="bouquet-wrapper">
+
+            <svg
+                id="bouquet"
+                viewBox="0 0 600 900"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-label="Animated flower bouquet"
+            >
+
+                <defs>
+
+                    <!-- Glow filters -->
+
+                    <filter id="flowerGlow">
+                        <feGaussianBlur stdDeviation="4" result="blur" />
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+
+                    <filter id="softGlow">
+                        <feGaussianBlur stdDeviation="8"/>
+                    </filter>
+
+                </defs>
+
+
+                <!-- ==================================================
+                     SHADOW
+                =================================================== -->
+
+                <ellipse
+                    id="bouquet-shadow"
+                    class="shadow"
+                    cx="300"
+                    cy="835"
+                    rx="110"
+                    ry="18"
+                />
+
+
+
+                <!-- ==================================================
+                     STEMS
+                =================================================== -->
+
+                <g id="stems">
+
+                    <path id="stem-1" class="stem"/>
+                    <path id="stem-2" class="stem"/>
+                    <path id="stem-3" class="stem"/>
+                    <path id="stem-4" class="stem"/>
+                    <path id="stem-5" class="stem"/>
+                    <path id="stem-6" class="stem"/>
+                    <path id="stem-7" class="stem"/>
+                    <path id="stem-8" class="stem"/>
+                    <path id="stem-9" class="stem"/>
+
+                </g>
+
+
+
+                <!-- ==================================================
+                     LEAVES
+                =================================================== -->
+
+                <g id="leaves">
+
+                    <path id="leaf-1" class="leaf"/>
+                    <path id="leaf-2" class="leaf"/>
+                    <path id="leaf-3" class="leaf"/>
+                    <path id="leaf-4" class="leaf"/>
+                    <path id="leaf-5" class="leaf"/>
+                    <path id="leaf-6" class="leaf"/>
+                    <path id="leaf-7" class="leaf"/>
+                    <path id="leaf-8" class="leaf"/>
+                    <path id="leaf-9" class="leaf"/>
+                    <path id="leaf-10" class="leaf"/>
+                    <path id="leaf-11" class="leaf"/>
+                    <path id="leaf-12" class="leaf"/>
+
+                </g>
+
+
+
+                <!-- ==================================================
+                     FLOWERS
+                =================================================== -->
+
+                <g id="flowers">
+
+                    <!-- White Flower 1 -->
+
+                    <g id="white-flower-1" class="flower white-flower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+
+                    <!-- White Flower 2 -->
+
+                    <g id="white-flower-2" class="flower white-flower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+
+                    <!-- White Flower 3 -->
+
+                    <g id="white-flower-3" class="flower white-flower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+
+                    <!-- Tulips -->
+
+                    <g id="tulip-1" class="flower tulip">
+
+                        <g class="bud"></g>
+
+                    </g>
+
+                    <g id="tulip-2" class="flower tulip">
+
+                        <g class="bud"></g>
+
+                    </g>
+
+                    <g id="tulip-3" class="flower tulip">
+
+                        <g class="bud"></g>
+
+                    </g>
+
+
+                    <!-- Blue Flowers -->
+
+                    <g id="red-flower-1" class="flower blue-flower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+                    <g id="blue-flower-2" class="flower blue-flower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+
+                    <!-- Sunflowers -->
+
+                    <g id="sunflower-1" class="flower sunflower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+                    <g id="sunflower-2" class="flower sunflower">
+
+                        <g class="petals"></g>
+
+                        <circle class="flower-center"/>
+
+                    </g>
+
+                </g>
+
+
+                <!-- Bouquet tie -->
+
+                <g id="bouquet-base">
+
+                    <path id="tie"/>
+
+                </g>
+
+            </svg>
+
+        </section>
+
+
+        <!-- Watermark -->
+
+        <div class="watermark">
+
+            <span class="watermark-icon"></span>
+
+            <span class="watermark-text"></span>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
