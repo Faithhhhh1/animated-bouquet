@@ -8,75 +8,46 @@ import {
    CONSTANTS
 ============================================================================ */
 
-export const STEM_COLORS = Object.freeze({
-    BASE: "#4F7152",
-    DARK: "#355238",
-    LIGHT: "#739679",
-    HIGHLIGHT: "#8DBA92",
-    SHADOW: "#29402C"
-});
-
-export const STEM_WIDTHS = Object.freeze({
-    THIN: 2,
-    SMALL: 3,
-    MEDIUM: 5,
-    LARGE: 7,
-    HERO: 9
-});
-
-export const STEM_ORIGIN = Object.freeze({
-    x: 540,
-    y: 1760
-});
-
-export const STEM_LIMITS = Object.freeze({
-    DEFAULT: 14
-});
+const STEM_COLOR = "#4F7152";
+const STEM_DARK = "#355238";
 
 /* ============================================================================
-   GEOMETRY HELPERS
+   GEOMETRY
 ============================================================================ */
 
-function lerp(a, b, t) {
-    return a + (b - a) * t;
-}
-
-function quadraticPath(start, control, end) {
-    return `M ${start.x} ${start.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`;
-}
-
-function createControl(start, end) {
+function createControlPoint(start, end) {
     return {
         x: (start.x + end.x) / 2 + (Math.random() - 0.5) * 120,
-        y: (start.y + end.y) / 2 - Math.random() * 80
+        y: (start.y + end.y) / 2 - Math.random() * 100
     };
 }
 
+function buildPath(start, control, end) {
+    return `M ${start.x} ${start.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`;
+}
+
 /* ============================================================================
-   CORE STEM
+   STEM CREATION
 ============================================================================ */
 
-function createStem(start, control, end, attrs = {}) {
+function createStem(start, control, end, extra = {}) {
 
-    const path = createPath(
-        quadraticPath(start, control, end),
-        {
-            stroke: STEM_COLORS.BASE,
-            strokeWidth: STEM_WIDTHS.MEDIUM,
-            fill: "none",
-            strokeLinecap: "round",
-            ...attrs
-        }
-    );
+    const path = createPath(buildPath(start, control, end), {
+        fill: "none",
+        stroke: STEM_COLOR,
+        strokeWidth: 4,
+        strokeLinecap: "round",
+        ...extra
+    });
 
     return path;
 }
 
-function createBranch(start, control, end, attrs = {}) {
+function createBranch(start, control, end) {
+
     return createStem(start, control, end, {
-        strokeWidth: STEM_WIDTHS.SMALL,
-        stroke: STEM_COLORS.DARK,
-        ...attrs
+        stroke: STEM_DARK,
+        strokeWidth: 3
     });
 }
 
@@ -85,13 +56,14 @@ function createHeroStem(start, control, end) {
     const g = createGroup({ class: "hero-stem" });
 
     const shadow = createStem(start, control, end, {
-        stroke: STEM_COLORS.SHADOW,
-        strokeWidth: STEM_WIDTHS.HERO,
-        opacity: 0.2
+        stroke: "#1f2f22",
+        strokeWidth: 10,
+        opacity: 0.25
     });
 
     const main = createStem(start, control, end, {
-        strokeWidth: STEM_WIDTHS.HERO
+        strokeWidth: 8,
+        stroke: STEM_COLOR
     });
 
     appendChildren(g, shadow, main);
@@ -103,16 +75,16 @@ function createHeroStem(start, control, end) {
    STEM GENERATION
 ============================================================================ */
 
-function generateStem(type = "main") {
+function generateStem(type, origin) {
 
-    const start = { ...STEM_ORIGIN };
+    const start = { ...origin };
 
     const end = {
-        x: STEM_ORIGIN.x + (Math.random() - 0.5) * 300,
-        y: STEM_ORIGIN.y - (500 + Math.random() * 300)
+        x: origin.x + (Math.random() - 0.5) * 300,
+        y: origin.y - (500 + Math.random() * 300)
     };
 
-    const control = createControl(start, end);
+    const control = createControlPoint(start, end);
 
     if (type === "hero") return createHeroStem(start, control, end);
     if (type === "branch") return createBranch(start, control, end);
@@ -120,7 +92,7 @@ function generateStem(type = "main") {
     return createStem(start, control, end);
 }
 
-function generateStemField(count = STEM_LIMITS.DEFAULT) {
+function generateStemField(count = 14, origin = { x: 540, y: 1760 }) {
 
     const group = createGroup({ id: "generated-stems" });
 
@@ -133,7 +105,7 @@ function generateStemField(count = STEM_LIMITS.DEFAULT) {
             i % 4 === 0 ? "branch" :
             "main";
 
-        stems.push(generateStem(type));
+        stems.push(generateStem(type, origin));
     }
 
     appendChildren(group, stems);
@@ -147,11 +119,13 @@ function generateStemField(count = STEM_LIMITS.DEFAULT) {
 
 export function createStemLayer() {
 
-    const group = createGroup({
-        id: "stems"
+    const root = createGroup({
+        id: "stems-layer"
     });
 
-    appendChildren(group, generateStemField());
+    const field = generateStemField(14);
 
-    return group;
+    appendChildren(root, field);
+
+    return root;
 }
