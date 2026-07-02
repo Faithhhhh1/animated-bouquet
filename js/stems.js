@@ -5,11 +5,24 @@ import {
 } from "./svg.js";
 
 /* ============================================================================
-   CONSTANTS
+   EXPORTED CONSTANTS (FIX FOR YOUR ERROR)
 ============================================================================ */
 
-const STEM_COLOR = "#4F7152";
-const STEM_DARK = "#355238";
+export const STEM_COLORS = Object.freeze({
+    BASE: "#4F7152",
+    DARK: "#355238",
+    LIGHT: "#739679",
+    HIGHLIGHT: "#8DBA92",
+    SHADOW: "#29402C"
+});
+
+export const STEM_WIDTHS = Object.freeze({
+    THIN: 2,
+    SMALL: 3,
+    MEDIUM: 5,
+    LARGE: 7,
+    HERO: 9
+});
 
 /* ============================================================================
    GEOMETRY
@@ -32,22 +45,20 @@ function buildPath(start, control, end) {
 
 function createStem(start, control, end, extra = {}) {
 
-    const path = createPath(buildPath(start, control, end), {
+    return createPath(buildPath(start, control, end), {
         fill: "none",
-        stroke: STEM_COLOR,
-        strokeWidth: 4,
+        stroke: STEM_COLORS.BASE,
+        strokeWidth: STEM_WIDTHS.MEDIUM,
         strokeLinecap: "round",
         ...extra
     });
-
-    return path;
 }
 
 function createBranch(start, control, end) {
 
     return createStem(start, control, end, {
-        stroke: STEM_DARK,
-        strokeWidth: 3
+        stroke: STEM_COLORS.DARK,
+        strokeWidth: STEM_WIDTHS.SMALL
     });
 }
 
@@ -56,14 +67,14 @@ function createHeroStem(start, control, end) {
     const g = createGroup({ class: "hero-stem" });
 
     const shadow = createStem(start, control, end, {
-        stroke: "#1f2f22",
-        strokeWidth: 10,
+        stroke: STEM_COLORS.SHADOW,
+        strokeWidth: STEM_WIDTHS.HERO,
         opacity: 0.25
     });
 
     const main = createStem(start, control, end, {
-        strokeWidth: 8,
-        stroke: STEM_COLOR
+        stroke: STEM_COLORS.BASE,
+        strokeWidth: STEM_WIDTHS.HERO
     });
 
     appendChildren(g, shadow, main);
@@ -123,9 +134,7 @@ export function createStemLayer() {
         id: "stems-layer"
     });
 
-    const field = generateStemField(14);
-
-    appendChildren(root, field);
+    appendChildren(root, generateStemField());
 
     return root;
 }
