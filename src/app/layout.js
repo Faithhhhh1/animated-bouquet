@@ -11,19 +11,19 @@ const specialElite = Special_Elite({ weight: '400', subsets: ['latin'], display:
 
 export const metadata = {
   title: 'Bloomshire — Beautiful Flowers Delivered Digitally',
-  description: 'Build and send beautiful digital flower bouquets to anyone, anywhere. Pick your flowers, write a heartfelt card, and share the love.',
+  description: 'Beautiful digital flower bouquets with love.',
   keywords: 'digital bouquet, flowers, send flowers online, virtual flowers, digital gift',
   metadataBase: new URL('https://digital-bouquet-henna.vercel.app'),
   openGraph: {
     title: 'Bloomshire — Beautiful Flowers Delivered Digitally',
-    description: 'Build and send beautiful digital flower bouquets to anyone, anywhere.',
+    description: 'Beautiful digital flower bouquets with love.',
     type: 'website',
     siteName: 'Bloomshire',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bloomshire — Beautiful Flowers Delivered Digitally',
-    description: 'Build and send beautiful digital flower bouquets to anyone, anywhere.',
+    description: 'Beautiful digital flower bouquets with love.',
   },
   manifest: '/manifest.json',
 };
