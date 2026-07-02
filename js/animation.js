@@ -11,8 +11,7 @@ import { createIntroMessage } from "./messages.js";
 
 /* ========================= */
 
-const { svg } = createScene();
-document.body.appendChild(svg);
+const svg = document.getElementById("bouquet-svg");
 
 /* ========================= */
 
